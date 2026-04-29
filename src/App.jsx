@@ -126,8 +126,11 @@ function App() {
                 <img src={persona.image} alt={persona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
                 <span style={{ display: 'none' }}>{persona.name.charAt(0)}</span>
               </span>
-              {persona.name}
-              {activePersonaId === persona.id && <ChevronRight size={16} style={{ marginLeft: 'auto' }} />}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', flex: 1, overflow: 'hidden' }}>
+                <span style={{ fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{persona.name}</span>
+                <span style={{ fontSize: '0.75rem', opacity: 0.7, marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{persona.role}</span>
+              </div>
+              {activePersonaId === persona.id && <ChevronRight size={16} style={{ marginLeft: 'auto', flexShrink: 0 }} />}
             </button>
           ))}
         </div>
@@ -140,8 +143,9 @@ function App() {
             <img src={activePersona.image} alt={activePersona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
             <span style={{ display: 'none' }}>{activePersona.name.charAt(0)}</span>
           </div>
-          <div className="persona-info">
-            <h2>{activePersona.name}</h2>
+          <div className="persona-info" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <h2 style={{ margin: 0, fontSize: '1.1rem' }}>{activePersona.name}</h2>
+            <span style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '2px' }}>{activePersona.role}</span>
           </div>
         </div>
 
@@ -152,7 +156,8 @@ function App() {
                 <img src={activePersona.image} alt={activePersona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
                 <span style={{ display: 'none' }}>{activePersona.name.charAt(0)}</span>
               </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', fontWeight: 500 }}>You are chatting with {activePersona.name}</h3>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', fontWeight: 500 }}>You are chatting with {activePersona.name}</h3>
+              <p style={{ fontSize: '1rem', opacity: 0.8, marginBottom: '2rem', color: 'inherit' }}>{activePersona.role}</p>
             </div>
           ) : (
             messages.map((msg, idx) => (
