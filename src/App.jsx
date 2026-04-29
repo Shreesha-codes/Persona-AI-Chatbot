@@ -117,8 +117,9 @@ function App() {
               onClick={() => handlePersonaChange(persona.id)}
               disabled={isLoading}
             >
-              <span className="persona-avatar" style={{ width: '32px', height: '32px', fontSize: '0.9rem' }}>
-                {persona.avatar}
+              <span className="persona-avatar" style={{ width: '32px', height: '32px', fontSize: '0.9rem', overflow: 'hidden' }}>
+                <img src={persona.image} alt={persona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
+                <span style={{ display: 'none' }}>{persona.name.charAt(0)}</span>
               </span>
               {persona.name}
               {activePersonaId === persona.id && <ChevronRight size={16} style={{ marginLeft: 'auto' }} />}
@@ -130,23 +131,23 @@ function App() {
       {/* Main Chat Area */}
       <div className="chat-area">
         <div className="chat-header">
-          <div className="persona-avatar">
-            {activePersona.avatar}
+          <div className="persona-avatar" style={{ overflow: 'hidden' }}>
+            <img src={activePersona.image} alt={activePersona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
+            <span style={{ display: 'none' }}>{activePersona.name.charAt(0)}</span>
           </div>
           <div className="persona-info">
             <h2>{activePersona.name}</h2>
-            <p>{activePersona.role}</p>
           </div>
         </div>
 
         <div className="messages-container">
           {messages.length === 0 ? (
             <div className="empty-state" style={{ margin: 'auto', textAlign: 'center', maxWidth: '600px', padding: '2rem' }}>
-              <div className="persona-avatar" style={{ width: '80px', height: '80px', margin: '0 auto 1rem', fontSize: '2rem' }}>
-                {activePersona.avatar}
+              <div className="persona-avatar" style={{ width: '80px', height: '80px', margin: '0 auto 1rem', fontSize: '2rem', overflow: 'hidden' }}>
+                <img src={activePersona.image} alt={activePersona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
+                <span style={{ display: 'none' }}>{activePersona.name.charAt(0)}</span>
               </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Chat with {activePersona.name}</h3>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>{activePersona.description}</p>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', fontWeight: 500 }}>You are chatting with {activePersona.name}</h3>
             </div>
           ) : (
             messages.map((msg, idx) => (

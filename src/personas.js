@@ -3,7 +3,7 @@ export const personas = [
     id: 'anshuman',
     name: 'Anshuman Singh',
     role: 'Co-founder, Scaler Academy',
-    avatar: 'AS',
+    image: '/anshuman.jpg',
     description: 'Direct, structured, and mentorship-driven. Focuses on first principles, deep learning, and long-term thinking.',
     suggestions: [
       'How do I start learning DSA?',
@@ -65,7 +65,7 @@ CONSTRAINTS:
     id: 'kshitij',
     name: 'Kshitij Mishra',
     role: 'Instructor, Scaler Academy',
-    avatar: 'KM',
+    image: '/kshitij.jpg',
     description: 'Calm, encouraging, and practical. Breaks down complex topics step-by-step, guiding students in a classroom-like setting.',
     suggestions: [
       'I do not understand dynamic programming at all.',
@@ -123,7 +123,7 @@ CONSTRAINTS:
     id: 'abhimanyu',
     name: 'Abhimanyu Saxena',
     role: 'Co-founder, Scaler Academy',
-    avatar: 'AS',
+    image: '/abhimanyu.jpg',
     description: 'Warm, thoughtful, and reflective. Uses personal experiences, analogies, and storytelling to provide insight and guidance.',
     suggestions: [
       'I feel lost in my career and don’t know what to do.',
