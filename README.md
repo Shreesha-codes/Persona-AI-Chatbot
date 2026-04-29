@@ -3,7 +3,7 @@
 A working persona-based AI chatbot built for Prompt Engineering | Scaler Academy.
 
 ## Live Deployment
-**Live Link:** [Insert Vercel/Netlify Link Here]
+**Live Link:** [https://persona-ai-chatbot-bcm6.vercel.app](https://persona-ai-chatbot-bcm6.vercel.app?_vercel_share=UyI4XuymjFfgYtzV6BdjBilituo1rUbP)
 
 ## Overview
 This application allows users to have real conversations with three distinct Scaler/InterviewBit personalities:
