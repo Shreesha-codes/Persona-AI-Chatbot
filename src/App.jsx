@@ -5,7 +5,10 @@ import { personas } from './personas';
 
 function App() {
   const [activePersonaId, setActivePersonaId] = useState(personas[0].id);
-  const [messages, setMessages] = useState([]);
+  const [chatHistories, setChatHistories] = useState(
+    personas.reduce((acc, p) => ({ ...acc, [p.id]: [] }), {})
+  );
+  const messages = chatHistories[activePersonaId];
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,7 +28,6 @@ function App() {
   const handlePersonaChange = (id) => {
     if (isLoading) return;
     setActivePersonaId(id);
-    setMessages([]);
     setError('');
   };
 
@@ -46,7 +48,7 @@ function App() {
       parts: [{ text: msg.content }]
     }));
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -86,14 +88,17 @@ function App() {
     const userMessage = { role: 'user', content: inputValue.trim() };
     const newMessages = [...messages, userMessage];
     
-    setMessages(newMessages);
+    setChatHistories(prev => ({ ...prev, [activePersonaId]: newMessages }));
     setInputValue('');
     setIsLoading(true);
     setError('');
 
     try {
       const aiResponseText = await callGeminiAPI(newMessages);
-      setMessages([...newMessages, { role: 'ai', content: aiResponseText }]);
+      setChatHistories(prev => ({ 
+        ...prev, 
+        [activePersonaId]: [...newMessages, { role: 'ai', content: aiResponseText }] 
+      }));
     } catch (err) {
       setError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
