@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, User, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { personas } from './personas';
+// new added
 
 function App() {
   const [activePersonaId, setActivePersonaId] = useState(personas[0].id);
@@ -12,9 +13,9 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const messagesEndRef = useRef(null);
-  
+
   const activePersona = personas.find(p => p.id === activePersonaId);
 
   const scrollToBottom = () => {
@@ -38,7 +39,7 @@ function App() {
 
   const callGeminiAPI = async (chatHistory) => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    
+
     if (!apiKey) {
       throw new Error("API Key is missing. Please add VITE_GEMINI_API_KEY to your .env file.");
     }
@@ -72,22 +73,22 @@ function App() {
     }
 
     const data = await response.json();
-    
+
     if (!data.candidates || data.candidates.length === 0) {
       throw new Error("No response received from the AI.");
     }
-    
+
     return data.candidates[0].content.parts[0].text;
   };
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
-    
+
     if (!inputValue.trim() || isLoading) return;
 
     const userMessage = { role: 'user', content: inputValue.trim() };
     const newMessages = [...messages, userMessage];
-    
+
     setChatHistories(prev => ({ ...prev, [activePersonaId]: newMessages }));
     setInputValue('');
     setIsLoading(true);
@@ -95,9 +96,9 @@ function App() {
 
     try {
       const aiResponseText = await callGeminiAPI(newMessages);
-      setChatHistories(prev => ({ 
-        ...prev, 
-        [activePersonaId]: [...newMessages, { role: 'ai', content: aiResponseText }] 
+      setChatHistories(prev => ({
+        ...prev,
+        [activePersonaId]: [...newMessages, { role: 'ai', content: aiResponseText }]
       }));
     } catch (err) {
       setError(err.message || "An unexpected error occurred. Please try again.");
@@ -113,7 +114,7 @@ function App() {
         <div className="sidebar-header">
           <h1>Scaler Personas</h1>
         </div>
-        
+
         <div className="persona-list">
           {personas.map(persona => (
             <button
@@ -168,7 +169,7 @@ function App() {
               </div>
             ))
           )}
-          
+
           {isLoading && (
             <div className="message ai">
               <div className="typing-indicator">
@@ -190,8 +191,8 @@ function App() {
         {messages.length === 0 && (
           <div className="suggestions">
             {activePersona.suggestions.map((suggestion, idx) => (
-              <button 
-                key={idx} 
+              <button
+                key={idx}
                 className="suggestion-chip"
                 onClick={() => handleSuggestionClick(suggestion)}
                 disabled={isLoading}
@@ -212,8 +213,8 @@ function App() {
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isLoading}
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="send-button"
               disabled={!inputValue.trim() || isLoading}
             >
